@@ -1,5 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
+import Logo from './components/Logo';
+import Paragraph from './components/Paragraph';
 
 function App() {
   const name = "리엑트";
@@ -12,17 +13,19 @@ function App() {
       <div className="App">
         <header className="App-header">
           {/* 3항연산자 */}
+          <Logo/>
           {
             showLogo === "show" ? (
-            <img src={logo} className="App-logo" alt="logo" />
+              <Logo size={100}/> 
+          
             ) : (
               <h1>REACT</h1>
             )
           }
 
-          <p>
+          <Paragraph size={14} color={"blue"}>
             Edit <code>src/App.js</code> and save to reload.
-          </p>
+          </Paragraph>
           
           {/*true일때만 실행*/}
           { showLink && (
