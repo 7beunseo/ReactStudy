@@ -4,7 +4,7 @@ import Paragraph from './components/Paragraph';
 import Board from './components/Board'
 import Counter from './components/Counter'
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 function App() {
   const name = "리엑트";
@@ -39,9 +39,31 @@ function App() {
   const [visible, setVisible] = useState(false);
   // count
   const [totalCount, setTotalCount] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log(`You onClicked ${count} times`)
+  }, [count]) // count의 변화를 감지
+
+  useEffect(() => {
+    console.log("Component Loaded")
+    const handleScroll = () => {
+      console.log(window.scrollY)
+    }
+
+    document.addEventListener("scroll", handleScroll) // 전략적인 이벤트를 사용할 때 쓸 수 있음 
+    return () => document.removeEventListener('scroll', handleScroll) // return으로 반환한 함수는 컴포넌트가 제거될 때 실행됨 
+  }, []) // 컴포넌트가 처음 로드될 때 실행
 
   return (
     <div>
+      <div>
+        You onClicked {count} times
+      </div>
+      <button onClick={() => setCount(count + 1)}>+</button>
+ 
+      <div style={{height: 10000}}></div>
+      {/*
       totalCount : {totalCount}
       <Counter 
         onIncreate={(count) => setTotalCount(totalCount + 1)}
@@ -66,7 +88,9 @@ function App() {
 
       <div className="App">
         <header className="App-header">
+         */}
           {/* 3항연산자 */}
+          {/*
           <Logo/>
           {
             showLogo === "show" ? (
@@ -80,8 +104,9 @@ function App() {
           <Paragraph size={14} color={"blue"}>
             Edit <code>src/App.js</code> and save to reload.
           </Paragraph>
-          
+          */}
           {/*true일때만 실행*/}
+          {/*
           { showLink && (
           <a
             className="App-link"
@@ -101,9 +126,10 @@ function App() {
             }
           </ul>
         </header>
+        
       </div>
       <span>TEST</span>
-
+      */}
     </div>
   );
 }
