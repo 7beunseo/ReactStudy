@@ -2,6 +2,7 @@ import './App.css';
 import Logo from './components/Logo';
 import Paragraph from './components/Paragraph';
 import Board from './components/Board'
+import Counter from './components/Counter'
 
 import {useState} from "react";
 
@@ -36,9 +37,25 @@ function App() {
 
   // 분기
   const [visible, setVisible] = useState(false);
+  // count
+  const [totalCount, setTotalCount] = useState(0);
 
   return (
     <div>
+      totalCount : {totalCount}
+      <Counter 
+        onIncreate={(count) => setTotalCount(totalCount + 1)}
+        onDecrease={(count) => setTotalCount(totalCount - 1)}
+      />
+      <Counter 
+        onIncreate={(count) => setTotalCount(totalCount + 1)}
+        onDecrease={(count) => setTotalCount(totalCount - 1)}
+      />
+      <Counter 
+        onIncreate={(count) => setTotalCount(totalCount + 1)}
+        onDecrease={(count) => setTotalCount(totalCount - 1)}
+      />
+
       <button onClick={() => setVisible(!visible)}>Toggle</button>
       {visible ? 
         (<h1>논리곱 연산자를 통해 쉽게 JSX 렌더링 여부를 결정할 수 있습니다.</h1>
@@ -86,6 +103,7 @@ function App() {
         </header>
       </div>
       <span>TEST</span>
+
     </div>
   );
 }
