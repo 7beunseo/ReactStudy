@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 import Input from './components/Input';
 import AutoCounter from './components/AutoCounter';
+import PageNation from './components/Pagenation';
 
 function App() {
   const name = "리엑트";
@@ -60,12 +61,28 @@ function App() {
   // useRef
   const inputRef = useRef();
 
+  // 페이지네이션
+  const articles2 = new Array(100).fill().map((_, i) => ({
+    id: 1,
+    title: `${i}번 게시물`,
+  }))
+
+  const [page, setPage] = useState(0);
+  const limit = 10;
+  console.log(page)
+  const offset = page + limit;
+
   return (
     <div>
+      <PageNation defaultPage={0} limit={limit} total={articles2.length} onChange={setPage}/>
+      <Board articles={articles2.slice(offset, offset + limit)}/> 
+
+      {/*
       <Input ref={inputRef}/>
       <button onClick={() => inputRef.current.focus()}>Focus</button>
 
       <AutoCounter />
+      */}
 
       {/* totalCount : {totalCount} */}
       {/* <Counter 
