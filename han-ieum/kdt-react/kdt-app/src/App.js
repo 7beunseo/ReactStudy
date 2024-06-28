@@ -1,39 +1,41 @@
 import './App.css';
 import Logo from './components/Logo';
 import Paragraph from './components/Paragraph';
-import Board from './components/Board'
-import Counter from './components/Counter'
+import Board from './components/Board';
+import Counter from './components/Counter';
 
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { useRef } from "react";
+import Input from './components/Input';
+import AutoCounter from './components/AutoCounter';
 
 function App() {
   const name = "리엑트";
   const showLink = false;
   const showLogo = "show";
-  const names = ["React", "Vue", "Angular"]
+  const names = ["React", "Vue", "Angular"];
 
   const articles = [{
-      id: 1,
-      title: "안녕하세요1",
-      author: "김은서"
-    },{
-      id: 2,
-      title: "안녕하세요2",
-      author: "김은서"
-    },{
-      id: 3,
-      title: "안녕하세요3",
-      author: "김은서"
-    },{
-      id: 4,
-      title: "안녕하세요4",
-      author: "김은서"
-    },{
-      id: 5,
-      title: "안녕하세요5",
-      author: "김은서"
-    },
-  ]
+    id: 1,
+    title: "안녕하세요1", 
+    author: "김은서"
+  },{
+    id: 2,
+    title: "안녕하세요2",
+    author: "김은서"
+  },{
+    id: 3,
+    title: "안녕하세요3",
+    author: "김은서"
+  },{
+    id: 4,
+    title: "안녕하세요4",
+    author: "김은서"
+  },{
+    id: 5,
+    title: "안녕하세요5",
+    author: "김은서"
+  }];
 
   // 분기
   const [visible, setVisible] = useState(false);
@@ -42,39 +44,40 @@ function App() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    console.log(`You onClicked ${count} times`)
-  }, [count]) // count의 변화를 감지
+    console.log(`You clicked ${count} times`);
+  }, [count]); // count의 변화를 감지
 
   useEffect(() => {
-    console.log("Component Loaded")
+    console.log("Component Loaded");
     const handleScroll = () => {
-      console.log(window.scrollY)
-    }
+      console.log(window.scrollY);
+    };
 
-    document.addEventListener("scroll", handleScroll) // 전략적인 이벤트를 사용할 때 쓸 수 있음 
-    return () => document.removeEventListener('scroll', handleScroll) // return으로 반환한 함수는 컴포넌트가 제거될 때 실행됨 
-  }, []) // 컴포넌트가 처음 로드될 때 실행
+    document.addEventListener("scroll", handleScroll); // 전략적인 이벤트를 사용할 때 쓸 수 있음 
+    return () => document.removeEventListener('scroll', handleScroll); // return으로 반환한 함수는 컴포넌트가 제거될 때 실행됨 
+  }, []); // 컴포넌트가 처음 로드될 때 실행
+
+  // useRef
+  const inputRef = useRef();
 
   return (
     <div>
-      <div>
-        You onClicked {count} times
-      </div>
-      <button onClick={() => setCount(count + 1)}>+</button>
- 
-      <div style={{height: 10000}}></div>
-      {/*
-      totalCount : {totalCount}
-      <Counter 
-        onIncreate={(count) => setTotalCount(totalCount + 1)}
+      <Input ref={inputRef}/>
+      <button onClick={() => inputRef.current.focus()}>Focus</button>
+
+      <AutoCounter />
+
+      {/* totalCount : {totalCount} */}
+      {/* <Counter 
+        onIncrease={(count) => setTotalCount(totalCount + 1)}
         onDecrease={(count) => setTotalCount(totalCount - 1)}
       />
       <Counter 
-        onIncreate={(count) => setTotalCount(totalCount + 1)}
+        onIncrease={(count) => setTotalCount(totalCount + 1)}
         onDecrease={(count) => setTotalCount(totalCount - 1)}
       />
       <Counter 
-        onIncreate={(count) => setTotalCount(totalCount + 1)}
+        onIncrease={(count) => setTotalCount(totalCount + 1)}
         onDecrease={(count) => setTotalCount(totalCount - 1)}
       />
 
@@ -84,14 +87,13 @@ function App() {
 
         ) : null}
 
-        {visible ? <Board articles={articles}/> : <p>게시판을 보려면 Toggle 버튼 클릭</p>}
+        {visible ? <Board articles={articles}/> : <p>게시판을 보려면 Toggle 버튼 클릭</p>} */}
 
-      <div className="App">
+
+      {/* <div className="App">
         <header className="App-header">
-         */}
           {/* 3항연산자 */}
-          {/*
-          <Logo/>
+          {/* <Logo/>
           {
             showLogo === "show" ? (
               <Logo size={100}/> 
@@ -105,9 +107,8 @@ function App() {
             Edit <code>src/App.js</code> and save to reload.
           </Paragraph>
           */}
-          {/*true일때만 실행*/}
-          {/*
-          { showLink && (
+          {/* true일때만 실행 */}
+          {/* { showLink && (
           <a
             className="App-link"
             href="https://reactjs.org"
@@ -128,8 +129,7 @@ function App() {
         </header>
         
       </div>
-      <span>TEST</span>
-      */}
+      <span>TEST</span> */}
     </div>
   );
 }
