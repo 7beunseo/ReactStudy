@@ -1,5 +1,5 @@
 // 회원가입 폼
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const Register = () => {
     // 객체 형태로 한번에 저장 
@@ -10,12 +10,27 @@ const Register = () => {
         bio: "",
     })
 
+    // useRef
+    const countRef = useRef(0);
+    const inputRef = useRef();
+    // console.log("Register 렌더링 : ", countRef.current); // 한번만 출력됨 
+
     const onChange = (e) => {
+        countRef.current ++;
+        console.log(countRef.current);
         setInput({
             ...input,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value // 포로퍼티의 키가 됨 
         });
     };
+
+    const onSubmit = (e) => {
+        if(input.name === "") {
+            // 이름을 입력하는 DOM 요소 포커스 
+            console.log(inputRef.current)
+            inputRef.current.focus();
+        }
+    }
 
     // const [name, setName] = useState("이름");
     // const [birth, setBirth] = useState("");
@@ -63,8 +78,19 @@ const Register = () => {
 
     return (
         <div>
+            {/* 
+            <button
+                onClick={() => {
+                    refObj.current++;
+                    console.log(refObj.current);
+                }}
+            >
+                ref + 1
+            </button> 
+            */}
+
             <div>
-                <input name="name" value={input.name} onChange={onChange} placeholder={"이름"}/>
+                <input ref={inputRef} name="name" value={input.name} onChange={onChange} placeholder={"이름"}/>
             </div>
 
             <div>
@@ -83,6 +109,8 @@ const Register = () => {
             <div>
                 <textarea name="bio" value={input.bio} onChange={onChange} />
             </div>
+
+            <button onClick={onSubmit}>제출</button>
         </div>
     )
 }
