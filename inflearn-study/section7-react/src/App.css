@@ -1,0 +1,16 @@
+body {
+  padding: 20px;
+}
+
+.App {
+  margin: 0 auto; /* 마진 400px 남는 곳 모두 */
+  width: 400px;
+}
+
+.App > section {
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(240, 240, 240);
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
