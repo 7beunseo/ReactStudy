@@ -37,7 +37,6 @@ const List = ({ todos, onUpdate, onDelete }) => {
 
     // useMemo 사용
     const {totalCount, doneCount, notDoneCount} = useMemo(() => {
-        console.log("getAnalyzedData 호출!");
         const totalCount = todos.length;
         // todo들 중에 된 것들만 저장 
         const doneCount = todos.filter((todo) => todo.isDone).length // todo의 length가 길어질 수록 시간이 오래 걸림 
