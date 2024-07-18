@@ -1,12 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './App.css'
 import Header from './components/Header'
 import Editor from './components/Editor'
 import List from './components/List'
-import { useState, useRef, useReducer } from 'react'
+import { useState, useRef, useReducer, useCallback } from 'react'
 
 function App() {
 
-  const onCreate = (content) => {
+  // 컴포넌트 생성 이후 다시는 리렌더링되지 않도록 수정 
+  const onCreate = useCallback((content) => {
     dispatch({
       type: "CREATE",
       data: {
@@ -16,21 +18,22 @@ function App() {
         date: new Date().getTime()
       }
     })
-  }
+  });
 
-  const onUpdate = (targetId) => {
+  const onUpdate = useCallback((targetId) => {
     dispatch({
       type: "UPDATE",
       targetId: targetId
     })  
-  }
+  }, []);
 
-  const onDelete = (targetId) => {
+  // 콜백함수를 그대로 생성해서 반환해줌 
+  const onDelete = useCallback((targetId) => {
     dispatch({
       type: "DELETE",
       targetId: targetId
     })
-  }
+  }, []); // onDelete 함수를 한번 생성(마운트 할때만 생성)하고 다시는 생성하지 않도록 설정 ([] 빈 배열로 놔둠)
 
   const mockData = [
     {

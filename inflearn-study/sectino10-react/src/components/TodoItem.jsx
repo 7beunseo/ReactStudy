@@ -25,15 +25,17 @@ const TodoItem = ({ id, isDone, content, date, onUpdate, onDelete }) => {
 // export default memo(TodoItem); 
 
 // 최적화 코드를 커스텀 
-export default memo(TodoItem, (prevProps, nextProps) => {
-    // 반환 값에 따라 Props가 바뀌었는지 안 바뀌었는지 판단 
-    // T -> props가 바뀌지 않음
-    // F -> props가 바뀜
+// export default memo(TodoItem, (prevProps, nextProps) => {
+//     // 반환 값에 따라 Props가 바뀌었는지 안 바뀌었는지 판단 
+//     // T -> props가 바뀌지 않음
+//     // F -> props가 바뀜
 
-    if(prevProps.id !== nextProps.id) return false;
-    if(prevProps.isDone !== nextProps.isDone) return false;
-    if(prevProps.content !== nextProps.content) return false;
-    if(prevProps.date !== nextProps.date) return false;
+//     if(prevProps.id !== nextProps.id) return false;
+//     if(prevProps.isDone !== nextProps.isDone) return false;
+//     if(prevProps.content !== nextProps.content) return false;
+//     if(prevProps.date !== nextProps.date) return false;
     
-    return true; // 리렌더링을 하지 마라
-}); 
+//     return true; // 리렌더링을 하지 마라
+// }); 
+
+export default memo(TodoItem); 
