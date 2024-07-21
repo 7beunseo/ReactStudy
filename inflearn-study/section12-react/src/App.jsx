@@ -6,6 +6,7 @@ import Diary from './pages/Diary'
 import New from './pages/New'
 import NotFound from './pages/NotFound'
 import ParamTest from './pages/ParamTest'
+import { getEmotionImage } from './util/get-emition-image'
 
 /*
 / : 모든 일기를 조회하는 Home 페이지
@@ -22,6 +23,13 @@ function App() {
 
   return (
     <>
+    <div>
+      <img src={getEmotionImage(1)} />
+      <img src={getEmotionImage(2)} />
+      <img src={getEmotionImage(3)} />
+      <img src={getEmotionImage(4)} />
+      <img src={getEmotionImage(5)} />
+    </div>
       <div>
         <Link to={"/"}>Home</Link>
         <Link to={"/new"}>New</Link>
