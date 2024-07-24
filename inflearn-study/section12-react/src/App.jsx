@@ -1,4 +1,4 @@
-import { act, useReducer, useRef } from 'react'
+import { useReducer, useRef, createContext } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
@@ -49,6 +49,10 @@ function reducer(state, action) {
   }
 }
 
+// 새로운 context 생성
+const DiaryStaetContext = createContext();
+const DiaryDispatchContext = createContext();
+
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(4);
@@ -89,26 +93,6 @@ function App() {
 
   return (
     <>
-    <button
-      onClick={() => {
-        onCreate(new Date().getTime(), 1, "Hello")
-      }}>
-        일기 추가 테스트
-      </button>
-
-      <button
-        onClick={(() => {
-          onUpdate(1, new Date().getTime(), 3, "수정된 일기입니다.");
-        })}>
-          일기 수정 테스트
-        </button>
-
-      <button
-        onClick={(() => {
-          onDelete(1);
-        })}>
-          일기 삭제 테스트
-        </button>
 
     <Header 
       title={"Header"}
@@ -116,14 +100,22 @@ function App() {
       rightChild={<Button text={"Right"} />}
     />
       
-      <Routes> {/* Route 컴포넌트만 들어갈 수 있음 */}
-        <Route path="/" element={<Home />} />
-        <Route path="/new" element={<New />} />
-        <Route path="/diary/:id" element={<Diary />} /> {/* 동적 경로 */}
-        <Route path="/edit/:id" element={<Edit />} />
-        <Route path="/param-test" element={<ParamTest /> } /> {/* param test : 라우터에 설정할 내용은 없음 */}
-        <Route path="*" element={<NotFound />}  />
-      </Routes>
+      <DiaryStaetContext.Provider value={data}> {/* 하위에 일기 데이터 공급 */}
+        <DiaryDispatchContext.Provider
+          value={({
+            onCreate, onUpdate, onDelete
+          })}
+          >
+          <Routes> {/* Route 컴포넌트만 들어갈 수 있음 */}
+            <Route path="/" element={<Home />} />
+            <Route path="/new" element={<New />} />
+            <Route path="/diary/:id" element={<Diary />} /> {/* 동적 경로 */}
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/param-test" element={<ParamTest /> } /> {/* param test : 라우터에 설정할 내용은 없음 */}
+            <Route path="*" element={<NotFound />}  />
+          </Routes>
+        </DiaryDispatchContext.Provider>
+      </DiaryStaetContext.Provider>
     </>
   )
 }
