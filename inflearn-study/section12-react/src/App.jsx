@@ -1,4 +1,4 @@
-import { React } from 'react'
+import { act, useReducer, useRef } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
@@ -6,59 +6,80 @@ import Diary from './pages/Diary'
 import New from './pages/New'
 import NotFound from './pages/NotFound'
 import ParamTest from './pages/ParamTest'
+import Edit from './pages/Edit'
+
 import Button from './components/Button'
 import Header from './components/Header'
-
-import { getEmotionImage } from './util/get-emition-image'
 
 /*
 / : 모든 일기를 조회하는 Home 페이지
 /new : 새로운 일기를 조회하는 New 페이지 
 /diary : 일기를 상세히 조회하는 Diary 페이지 
 */
-function App() {
-  // 특정 위치로 옮겨야 할 경우에는 nav 함수를 사용하자 
-  const nav = useNavigate();
 
-  const onClickButton = () => {
-    nav("/new");
+const mockData = [
+  {
+    id: 1,
+    createdDate: new Date().getTime(),
+    emotionId: 1,
+    content: "1번 일기 내용",
+  },
+  {
+    id: 2,
+    createdDate: new Date().getTime(),
+    emotionId: 2,
+    content: "2번 일기 내용",
+  },
+  {
+    id: 3,
+    createdDate: new Date().getTime(),
+    emotionId: 3,
+    content: "3번 일기 내용",
+  },
+]
+
+function reducer(state, action) {
+  switch(action.type) {
+    case "CREATE": return [action.data, ...state];
+  }
+}
+
+function App() {
+  const [data, dispatch] = useReducer(reducer, mockData);
+  const idRef = useRef(4);
+   
+  // 새로운 일기 추가
+  const onCreate =(createdDate, emotionId, content) => {
+    dispatch({
+      type: "CREATE",
+      data: {
+        id: idRef.current++,
+        createdDate,
+        emotionId,
+        content
+      }
+    })
   }
 
   return (
     <>
+    <button
+      onClick={() => {
+        onCreate(new Date().getTime(), 1, "Hello")
+      }}>
+        일기 추가 테스트
+      </button>
     <Header 
       title={"Header"}
       leftChild={<Button text={"Left"} />}
       rightChild={<Button text={"Right"} />}
     />
-    <Button 
-      text={"123"}
-      type={"DEFAULT"}
-      onClick={(() => {
-        console.log("123번 버튼 클릭");
-      })}
-    />
-
-    <Button 
-      text={"123"}
-      type={"POSITIVE"}
-      onClick={(() => {
-        console.log("123번 버튼 클릭");
-      })}
-    />
-
-      <Button 
-        text={"123"}
-        type={"NEGATIVE"}
-        onClick={(() => {
-          console.log("123번 버튼 클릭");
-        })}
-      />
       
       <Routes> {/* Route 컴포넌트만 들어갈 수 있음 */}
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<New />} />
         <Route path="/diary/:id" element={<Diary />} /> {/* 동적 경로 */}
+        <Route path="/edit/:id" element={<Edit />} />
         <Route path="/param-test" element={<ParamTest /> } /> {/* param test : 라우터에 설정할 내용은 없음 */}
         <Route path="*" element={<NotFound />}  />
       </Routes>
