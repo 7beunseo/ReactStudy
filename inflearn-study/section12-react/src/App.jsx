@@ -44,6 +44,8 @@ function reducer(state, action) {
     case "UPDATE": return state.map((item) => 
       String(item.id) === String(action.data.id) ? action.data : item
     );
+    case "DELETE": return state.filter((item) => String(item.id) !== String(action.id));
+    default: return state;
   }
 }
 
@@ -78,6 +80,12 @@ function App() {
   }
 
   // 기존 일기 삭제
+  const onDelete = (id) => {
+    dispatch({
+      type: "DELETE",
+      id
+    })
+  }
 
   return (
     <>
@@ -91,8 +99,16 @@ function App() {
       <button
         onClick={(() => {
           onUpdate(1, new Date().getTime(), 3, "수정된 일기입니다.");
-        })}
-        >일기 수정 테스트</button>
+        })}>
+          일기 수정 테스트
+        </button>
+
+      <button
+        onClick={(() => {
+          onDelete(1);
+        })}>
+          일기 삭제 테스트
+        </button>
 
     <Header 
       title={"Header"}
