@@ -1,11 +1,10 @@
 import Button from "./Button";
 import DiaryItem from "./DiaryItem";
 import './DiaryList.css'
-
+import { useNavigate } from "react-router-dom";
 
 const DiaryList = ({ data }) => {
-
-
+    const nav = useNavigate();
     return (
         <div className="DiaryList">
             {/* 메뉴바 */}
@@ -14,7 +13,8 @@ const DiaryList = ({ data }) => {
                     <option value={"latest"}>최신순</option>
                     <option value={"oldest"}>오래된 순</option>
                 </select>
-                <Button type={"POSITIVE"} text={"새 일기 쓰기"}/>
+                <Button 
+                    onClick={() => nav("/new")} type={"POSITIVE"} text={"새 일기 쓰기"}/>
             </div>
             {/* 메뉴 아이템 */}
             <div className="list_wrapper">
