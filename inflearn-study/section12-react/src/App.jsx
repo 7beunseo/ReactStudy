@@ -26,17 +26,21 @@ const mockData = [
   },
   {
     id: 2,
-    createdDate: new Date().getTime(),
+    createdDate: new Date("2024-07-24").getTime(),
     emotionId: 2,
     content: "2번 일기 내용",
   },
   {
     id: 3,
-    createdDate: new Date().getTime(),
+    createdDate: new Date("2024-06-24").getTime(),
     emotionId: 3,
     content: "3번 일기 내용",
   },
 ]
+
+// 새로운 context 생성
+export const DiaryStateContext = createContext();
+export const DiaryDispatchContext = createContext();
 
 function reducer(state, action) {
   switch(action.type) {
@@ -48,10 +52,6 @@ function reducer(state, action) {
     default: return state;
   }
 }
-
-// 새로운 context 생성
-const DiaryStaetContext = createContext();
-const DiaryDispatchContext = createContext();
 
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData);
@@ -93,14 +93,7 @@ function App() {
 
   return (
     <>
-
-    <Header 
-      title={"Header"}
-      leftChild={<Button text={"Left"} />}
-      rightChild={<Button text={"Right"} />}
-    />
-      
-      <DiaryStaetContext.Provider value={data}> {/* 하위에 일기 데이터 공급 */}
+      <DiaryStateContext.Provider value={data}> {/* 하위에 일기 데이터 공급 */}
         <DiaryDispatchContext.Provider
           value={({
             onCreate, onUpdate, onDelete
@@ -115,7 +108,7 @@ function App() {
             <Route path="*" element={<NotFound />}  />
           </Routes>
         </DiaryDispatchContext.Provider>
-      </DiaryStaetContext.Provider>
+      </DiaryStateContext.Provider>
     </>
   )
 }
