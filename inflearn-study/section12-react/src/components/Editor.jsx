@@ -1,7 +1,7 @@
 import './Editor.css'
 import EmotionItem from './EmotionItem'
 import Button from './Button'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -41,7 +41,7 @@ const emotionList = [
         emotionName: "끔찍함"
     },
 ]
-const Editor = ({ onSubmit }) => {
+const Editor = ({ initData, onSubmit }) => {
     const nav = useNavigate();
 
 
@@ -52,6 +52,15 @@ const Editor = ({ onSubmit }) => {
             content: ""
         }
     );
+
+    useEffect(() => {
+        if(initData) {
+            setInput({
+                ...initData,
+                createdDate: new Date(Number(initData.createdDate))
+            })
+        }
+    }, [initData])
 
     const onClickSubmitButton = () => {
         onSubmit(input);
