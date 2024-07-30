@@ -4,6 +4,7 @@ import { DiaryStateContext } from "../App";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import DiaryList from "../components/DiaryList";
+import usePageTtile from "../hooks/usePageTitle";
 
 const getMonthlyData = (pivotDate, data) => {
     // 달의 시작 시간 > timestamp 형식으로 
@@ -27,6 +28,8 @@ const Home = () => {
     const [pivotDate, setPivotDate] = useState(new Date());
 
     const monthlyData = getMonthlyData(pivotDate, data);
+
+    usePageTtile("감정 일기장");
 
     // 날짜를 한 달 앞으로 이동 
     const onIncreaseMonth = () => {
